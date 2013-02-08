@@ -1,0 +1,7 @@
+org/dihedron/regex/Regex.class
+org/dihedron/xml/DomHelper.class
+org/dihedron/strings/Strings.class
+org/dihedron/strings/Strings$1.class
+org/dihedron/strings/StringTokeniser.class
+org/dihedron/utils/Resource.class
+org/dihedron/reflection/ObjectInspector.class
