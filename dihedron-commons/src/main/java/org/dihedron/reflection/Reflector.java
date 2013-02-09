@@ -30,11 +30,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A helper to access object properties and method through reflection.
+ * A helper class to access object properties and method through reflection.
  * 
  * @author Andrea Funto'
  */
-public class ObjectInspector {
+public class Reflector {
 
 	/**
 	 * Default value for whether the field access should be through getter methods
@@ -55,7 +55,7 @@ public class ObjectInspector {
 	/**
 	 * The logger
 	 */
-	private final static Logger logger = LoggerFactory.getLogger(ObjectInspector.class);
+	private final static Logger logger = LoggerFactory.getLogger(Reflector.class);
 	
 	/**
 	 * The object under inspection.
@@ -77,7 +77,7 @@ public class ObjectInspector {
 	/**
 	 * Constructor.
 	 */
-	public ObjectInspector() {
+	public Reflector() {
 		this(DEFAULT_USE_GETTER);
 	}
 
@@ -87,7 +87,7 @@ public class ObjectInspector {
 	 * @param useGetter
 	 *   whether fields should be accessed only through their getter.
 	 */
-	public ObjectInspector(boolean useGetter) {
+	public Reflector(boolean useGetter) {
 		this(DEFAULT_USE_GETTER, DEFAULT_EXPOSE_PRIVATE_FIELDS);
 	}	
 
@@ -101,7 +101,7 @@ public class ObjectInspector {
 	 *   through the inspector as if they were public, by means of on-the-fly
 	 *   transparent un-protection.
 	 */
-	public ObjectInspector(boolean useGetter, boolean expose) {
+	public Reflector(boolean useGetter, boolean expose) {
 		this.useGetter = useGetter;
 		this.exposePrivateFields = expose;
 	}	
@@ -114,7 +114,7 @@ public class ObjectInspector {
 	 * @return
 	 *   the inspector itself, for method chaining.
 	 */
-	public ObjectInspector applyTo(Object object) {
+	public Reflector applyTo(Object object) {
 		assert object != null : "object to inspect must not be null";
 		this.object = object;
 		return this;
@@ -171,14 +171,35 @@ public class ObjectInspector {
 		this.exposePrivateFields = expose;
 	}
 	
+	/**
+	 * Returns whether the object under inspection is an array of objects, e.g if 
+	 * applied to <code>int[]</code>, it will return <code>true</code>.
+	 * 
+	 * @return
+	 *   whether the object under inspection is an array of objects.
+	 */
 	public boolean isArray() {
 		return object.getClass().isArray();
 	}
 	
+	/**
+	 * Returns whether the object under inspection is an instance of a <code>
+	 * List&lt;?&gt;</code>.
+	 * 
+	 * @return
+	 *   whether the object under inspection is a <code>List</code>. 
+	 */
 	public boolean isList() {
 		return object instanceof List<?>;
 	}
 	
+	/**
+	 * Returns whether the object under inspection is an instance of a <code>
+	 * Map&lt;?, ?&gt;</code>.
+	 * 
+	 * @return
+	 *    whether the object under inspection is a <code>Map</code>.
+	 */
 	public boolean isMap() {
 		return object instanceof Map<?, ?>;
 	}
@@ -187,7 +208,7 @@ public class ObjectInspector {
 	 * Returns the number of elements in the array or list object;
 	 * 
 	 * @return
-	 *   the number of lements in the array or list object.
+	 *   the number of elements in the array or list object.
 	 * @throws Exception
 	 *   if the object is not a list or an array.
 	 */
@@ -212,7 +233,7 @@ public class ObjectInspector {
 	 *   the field value.
 	 * @throws Exception
 	 */
-	public Object getFieldValue(String fieldName) throws Exception {
+	public Object getFieldValue(String fieldName)/* throws Exception */{
 		
 		assert fieldName != null : "error: field name must not be null";
 		

@@ -22,7 +22,7 @@ package org.dihedron.ogtl.operators;
 
 import java.util.Map;
 
-import org.dihedron.reflection.ObjectInspector;
+import org.dihedron.reflection.Reflector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +58,7 @@ public class GetProperty implements Operator {
 	public Object apply(Object operand) throws Exception {
 		assert operand != null : "operand must be a valid object";
 		logger.debug("getting property '{}' from object of class '{}'", property, operand.getClass().getSimpleName());
-		ObjectInspector inspector = new ObjectInspector(false).applyTo(operand);
+		Reflector inspector = new Reflector(false).applyTo(operand);
 		if(inspector.isMap()) {
 			@SuppressWarnings("unchecked") Map<String, ?> map = (Map<String, ?>)operand;
 			return map.get(property);

@@ -19,7 +19,7 @@
 
 package org.dihedron.ogtl.operators;
 
-import org.dihedron.reflection.ObjectInspector;
+import org.dihedron.reflection.Reflector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +58,7 @@ public class Invoke implements Operator {
 	public Object apply(Object operand) throws Exception {
 		assert operand != null : "operand must be a valid object";
 		Invocation invocation = (Invocation)operand;		
-		return new ObjectInspector().applyTo(invocation.getObject()).invoke(invocation.getMethod());
+		return new Reflector().applyTo(invocation.getObject()).invoke(invocation.getMethod());
 	}
 
 	/**

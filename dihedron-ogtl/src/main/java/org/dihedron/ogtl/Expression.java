@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.dihedron.ogtl.operators.GetAtIndex;
 import org.dihedron.ogtl.operators.Operator;
-import org.dihedron.reflection.ObjectInspector;
+import org.dihedron.reflection.Reflector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +84,7 @@ public class Expression {
 		logger.debug("applying expression '{}' to object of class '{}'", this.toString(), operand.getClass().getSimpleName());
 		
 		if(operand != null && !operators.isEmpty()) {			
-			ObjectInspector inspector = new ObjectInspector();
+			Reflector inspector = new Reflector();
 			
 			for(Operator operator : operators) {
 				logger.debug("applying operator '{}' to object '{}'", operator.toString(), operand.getClass().getSimpleName());
@@ -95,7 +95,7 @@ public class Expression {
 					for(int i = 0; i < size; ++i) {
 						operand = inspector.getElementAtIndex(i);
 						Object result = operator.apply(operand);
-						ObjectInspector insp = new ObjectInspector();
+						Reflector insp = new Reflector();
 						insp.applyTo(result);
 						if(insp.isArray() || insp.isList()) {
 							int resultSize = insp.getArrayLength();

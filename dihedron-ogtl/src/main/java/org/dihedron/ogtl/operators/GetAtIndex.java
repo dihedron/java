@@ -19,7 +19,7 @@
 
 package org.dihedron.ogtl.operators;
 
-import org.dihedron.reflection.ObjectInspector;
+import org.dihedron.reflection.Reflector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +60,7 @@ public class GetAtIndex implements Operator {
 	 */
 	public Object apply(Object operand) throws Exception {		
 		assert operand != null : "operand must be a valid object";
-		return new ObjectInspector().applyTo(operand).getElementAtIndex(index);
+		return new Reflector().applyTo(operand).getElementAtIndex(index);
 	}
 	
 	/**
