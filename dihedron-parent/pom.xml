@@ -38,6 +38,7 @@
 		<module>../dihedron-commons</module>
 		<module>../dihedron-ogtl</module>
 		<module>../dihedron-ulog</module>
+		<module>../dihedron-ulog-slf4j</module>
 	</modules>
 
 	<build>

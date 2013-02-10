@@ -1,0 +1,14 @@
+ABSTRACT:
+This GIT repository contains all Java projects by Andrea Funtò.
+
+BUILD:
+In order to build, use Maven and run the "install" command on project
+"dihedron-parent": it will automatically build all projects.
+
+DOCUMENTATION:
+Project documentation can be found, once built, under each project's
+{project.dir}/target/site/ directory.
+
+LICENSE:
+All code is released under the GNU Lesser General Public License ver.3
+or later, at your choice.
