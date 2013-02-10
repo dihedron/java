@@ -46,8 +46,6 @@ public class TeeHandler implements MessageHandler {
 	
 	/**
 	 * Constructor.
-	 * 
-	 * @param currentHandler
 	 */
 	public TeeHandler() {		
 	}
@@ -55,7 +53,8 @@ public class TeeHandler implements MessageHandler {
 	/**
 	 * Constructor.
 	 * 
-	 * @param currentHandler
+	 * @param handlers
+	 *   a set of handlers to which the messages will be forwarded.
 	 */
 	public TeeHandler(MessageHandler... handlers) {
 		for(MessageHandler handler : handlers) {
@@ -132,13 +131,11 @@ public class TeeHandler implements MessageHandler {
 	 * branches.
 	 * 
 	 * @see 
-	 *   it.bankitalia.sisi.dsvaa.common.logging.writers.MessaheHandler#onMessage(org.dihedron.ulog.Message)
+	 *   org.dihedron.ulog.handlers.MessageHandler#onMessage(org.dihedron.ulog.Message)
 	 */
 	@Override
 	public void onMessage(Message message) {
-//		System.out.println("TEE forwarding message to " + handlers.size());
 		for(MessageHandler handler : handlers) {
-//			System.out.println("resending message from " + this.getClass().getSimpleName() + " to " + handler.getClass().getSimpleName());
 			Message clone = Message.clone(message);
 			handler.onMessage(clone);
 		}

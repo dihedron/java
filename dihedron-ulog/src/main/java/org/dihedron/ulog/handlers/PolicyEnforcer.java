@@ -103,16 +103,14 @@ public class PolicyEnforcer extends WrapperHandler implements ExtensionPoint {
 	}	
 	
 	/**
-	 * Sets the current policy.
+	 * Adds an extension to the set.
 	 * 
-	 * @param policy
-	 *   the current policy.
+	 * @param extension
+	 *   the extension to add.
 	 */
 	@Override
 	public void addExtension(Extension extension) {
-//		System.out.println("setting policy " + policy.getClass().getSimpleName());
 		if(extension instanceof Policy) {
-//			System.out.println("adding extension of class " + extension.getClass().getSimpleName() + " to " + this.getClass().getSimpleName());
 			this.policy = (Policy)extension;
 		}
 	}

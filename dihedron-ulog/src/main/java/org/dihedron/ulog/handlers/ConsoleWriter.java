@@ -99,8 +99,8 @@ public class ConsoleWriter implements MessageHandler {
 	 * this is set to <code>System.err</code>, use this method to 
 	 * set it to <code>System.err</code> if necessary.
 	 * 
-	 * @param error
-	 *   the overriding error <code>PrintStream</code>.
+	 * @param streamName
+	 *   the overriding error stream name.
 	 */
 	public void setErrorStream(String streamName) {
 		if(streamName != null){

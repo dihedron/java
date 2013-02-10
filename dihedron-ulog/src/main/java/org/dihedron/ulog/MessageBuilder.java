@@ -107,7 +107,7 @@ public class MessageBuilder {
 	public Message createMessage(Level level, Throwable exception, String text, Object... arguments) {
 		StackTraceElement frame = new Throwable("").getStackTrace()[getStackDepth()];
 		String classname = frame.getClassName().substring(frame.getClassName().lastIndexOf('.') + 1);	
-		if(text.contains("{}") && arguments != null && arguments.length > 0) {
+		if(arguments != null && arguments.length > 0 && text.contains("{}")) {
 			tokeniser.reset();
 			builder.setLength(0);
 			String [] tokens = tokeniser.tokenise(text);
@@ -115,7 +115,8 @@ public class MessageBuilder {
 			for(String token : tokens) {
 				builder.append(token);
 				if(arguments.length > i) {
-					builder.append(arguments[i++].toString());
+					builder.append(arguments[i] != null ? arguments[i].toString() : "<null>");
+					++i;
 				}
 			}
 			text = builder.toString();

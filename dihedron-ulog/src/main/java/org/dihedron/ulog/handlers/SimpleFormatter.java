@@ -123,11 +123,8 @@ public class SimpleFormatter extends WrapperHandler {
 	}
 	
 	/**
-	 * Enables the stack trace printout.
-	 * 
-	 * @note 
-	 *   the output may easily become very verbose and difficult 
-	 *   to read: use sparingly.
+	 * Enables the stack trace printout. <b>NOTE</b>: the output may easily 
+	 * become very verbose and difficult to read: use sparingly.
 	 */
 	public void setPrintStackTrace(String value) {
 		if(value!= null && value.trim().equalsIgnoreCase("false")) {
@@ -159,8 +156,6 @@ public class SimpleFormatter extends WrapperHandler {
 	 * 
 	 * @param message
 	 *   the message being formatted.
-	 * @return
-	 *   the formatted message as a <code>Message</code> object.
 	 */
 	@Override
 	public void onMessage(Message message) {
