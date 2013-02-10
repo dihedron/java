@@ -39,6 +39,7 @@
 		<module>../dihedron-ogtl</module>
 		<module>../dihedron-ulog</module>
 		<module>../dihedron-ulog-slf4j</module>
+		<module>../dihedron-struts-di</module>
 	</modules>
 
 	<build>
