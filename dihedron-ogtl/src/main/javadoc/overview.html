@@ -1,57 +1,82 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
   <HEAD>
-    <TITLE>Strutlets - A Model-View-Controller framework for JSR-286 portlets</TITLE>
+    <TITLE>OGTL - Object Graph Traversal Language</TITLE>
   </HEAD>
   <BODY>
   	<h2>1. Abstract</h2>
     <p>    
-    The <b>Strutlets</b> project is an attempt to create a simple development
-    framework for JSR-286 compliant portlets; it is heavily inspired by Struts2,
-    from which it borrows part of its name (Struts2 + Portlet yields Strutlets).
+    The <b>OGTL</b> library provides a simple regular grammar to express a 
+    navigation path through an object tree. 
     </p>
     <h2>2. Description</h2>
     <p>
-    The strutlets library implements the MVC pattern the Struts2 way: it sports 
-    a single controller portlet that receives all incoming requests and translates 
-    them into action method invocations; then it retrieves the action result and
-    based on an XML configuration file, on annotations or on educated guesses it
-    decides which JSP will render the view part.
-    </p> 
-    <p>
-    The framework emulates the interceptors logic of its senior counterpart, by 
-    providing an invocation process that flows through a stack of interceptors, 
-    each of which can work on the request and response objects, manipulate 
-    parameters, add value to the processing, perform additional tasks such as
-    reporting or profiling.
+    The OGTL library implements a parser and an execution engine for expressions 
+    complying with its minimal set of rules. An expression, expressed as a plain
+    Java string, is passed to an <code>ExpressionCompiler</code> to be compiled 
+    into an <code>Expression</code>, and can then be applied to a Java object to
+    navigate its fields (be they plain object or collection, such as arrays, lists 
+    and maps) and its methods, and even invoke them.
     </p>
-    <h2>3. How to use the framework</h2>
-    <h3>3.1 Setting up the portlet(s) </h3>
     <p>
-    In order to set up the controller portlet, the following steps should be taken:
-    <ol>
-    <li>add the strutlets-X.Y.Z.jar file and its dependencies to the project's
-    WEB-INF/lib directory;</li>
-    <li>set the action controller portlet as the portlet class in the portlet.xml,
-    as follows:
-    <pre>
-		&lt;portlet&gt;
-			&lt;portlet-name>controller&lt;/portlet-name&gt;
-			&lt;display-name>Demo Action Controller&lt;/display-name&gt;
-			&lt;portlet-class>org.dihedron.strutlets.ActionController&lt;/portlet-class&gt;
-			[...]
-		&lt;/portlet&gt;
-    </pre>
-    </li>
-    <li>specify the additional parameters, as detailed in section 3.2</li>    
+    The general for of an expression is as follows:
+    <pre>field1.field2['field3'].3.field4["field5"][4].toString()</pre>
+    where:<ol>
+    <li><code>field1</code> accesses the corresponding field on the object to
+    which the expression will be applied</li>
+    <li><code>field2</code> accesses <code>field1</code>'s field named <code>field2
+    </code>; if the field is a plain object, then its <code>field3</code> field 
+    will be accessed at the next step; if it is a map, the value corresponding to
+    the key <code>field3</code> will be retrieved; if it is a collection, then
+    the <code>field3</code> accessor will be applied to <em>all</em> of the 
+    collection members, and the result will be itself a collection (a <code>List
+    </code>)</li>
+    <li>the next step looks for the element at index <code>3</code>; this is the
+    first notation for indexed access; the other one is <code>[3]</code>, and is 
+    shown further on down the expression</li>
+    <li>the next operations are again field accessors (<code>field4</code>, then
+    <code>field5</code>, then its <code>4</code>-th element</li>
+    <li>the last two steps are the access to the <code>toString</code> method, 
+    and its invocation through the invoke operator <code>()</code></li>
     </ol>
     </p>
-    The portlet is ready to be deployed even without specifying any parameter.
-    <h3>3.2 Adding the initialisation parameters</h3>
-    <p>The portlet is highly configurable. It currently supports the following 
-    parameters:
-    <ul>
-    <li></li>
+    <p>
+    Objects, lists and maps are all seen as maps in OGTL; more specifically:<ul>
+    <li>object are maps whose keys are fields and method names, and whose values 
+    are the corresponding object references and <code>java.lang.reflect.Method
+    </code>s</li>;
+    <li>lists and arrays are maps whose keys are the array indexes (<code>0, 1, 
+    2, 3, ...</code>)</li>
+    <li>maps are treated as... maps.</li>
     </ul>
+    Thus, the accessor operator can be expressed via the dot (<code>.property</code>),
+    or via the square parentheses (<code>['property']</code>, with single or double 
+    quotes); the index accessor, expressed again via dot notation (<code>.3</code>)
+    or via square parentheses (<code>[3]</code>) is treated differently to allow
+    for some check if no array flattening is to be applied (more on this later).
+    A method, accessed as a property (e.g. <code>.toString</code>) does not imply
+    the actual method invoation: it simply references the method object; the
+    actual invocation is performed with the invocation operator (<code>()</code>).
+    </p>
+    <p>Array flattening is something that is derived from MongoDB's query language 
+    more than from JSON: if a field is a collection (e.g. a list or an array), and 
+    the following operation is not and indexed access, the next operator will
+    be applied to each and every element in the collection, and the resulting 
+    collection will be considered as the operand for the next operator. So, if 
+    the object contains a list of lists and the expression does not involve index
+    operators, the result will be a list whose size if the sum of all the
+    lengths of the second order lists in the object.
+    </p>
+    <p>
+    As an example, say you have a list containing N lists of size M, the resulting
+    list will be N times M long.    
+    </p> 
+    <p>
+    This behaviour is the default by now, but the separation of property and index 
+    access operators provides a way to programmatically impose JSON- or MongoDB-
+    inspired semantics through a flag provided at expression compile time.
+    This will be implemented as soon as it becomes necessary for some project.
+    </p> 
+
   </BODY>
 </HTML>
