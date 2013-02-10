@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<handler class="org.dihedron.ulog.handlers.PolicyEnforcer">
+	<extension class="org.dihedron.ulog.policies.Or">
+		<extension class="org.dihedron.ulog.policies.SessionPolicy"/>
+		<extension class="org.dihedron.ulog.policies.GlobalPolicy">
+			<param name="level">INFO</param>
+		</extension>
+	</extension>
+	<handler class="org.dihedron.ulog.handlers.SimpleFormatter">
+		<param name="dateFormat">yyyyMMdd@HH:mm:ss.SSS</param>
+		<param name="printStackTrace">true</param>
+		<handler class="org.dihedron.ulog.handlers.SessionFormatter">
+			<handler class="org.dihedron.ulog.handlers.TeeHandler">
+			<!-- <handler class="org.dihedron.ulog.handlers.AsynchronousHandler"> -->
+					<handler class="org.dihedron.ulog.handlers.ConsoleWriter">
+						<param name="outputStream">stderr</param>
+						<param name="errorStream">stdout</param>
+						<param name="newLine">WINDOWS</param>
+					</handler>
+			<!-- </handler> -->
+			<!-- <handler class="org.dihedron.ulog.handlers.AsynchronousHandler"> -->
+					<handler class="org.dihedron.ulog.handlers.FileWriter">
+						<param name="file">myfilename.log</param>
+					</handler>
+			<!-- </handler> -->
+			</handler>
+		</handler>
+	</handler>
+</handler>
+
