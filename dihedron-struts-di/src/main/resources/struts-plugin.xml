@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="autobinder-default" extends="struts-default" abstract="true">
+		<interceptors>
+			<interceptor name="autobinder" class="org.dihedron.struts.plugin.AutoBinder"/>			
+			<interceptor-stack name="autobindingStack">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="autobinder">
+					<param name="checkType">true</param>
+					<param name="aliasBindings">binding.properties</param>					
+					<param name="jndiNameResolverClass">org.dihedron.struts.jndi.JBossJndiNameResolver</param>
+					<!-- 
+					<param name="jndiNameResolverClass">org.dihedron.struts.jndi.WebSphereJndiNameResolver</param>					
+					<param name="initialContextFactory">org.jnp.interfaces.NamingContextFactory</param>
+					<param name="providerUrl">jnp://localhost:1099</param>
+					-->					
+				</interceptor-ref>				
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="autobindingStack"/>
+	</package>	
+</struts>

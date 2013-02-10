@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+  <HEAD>
+    <TITLE>Dependency Injection for Struts2</TITLE>
+  </HEAD>
+  <BODY>
+    <p>
+    The <b>Dependency Injection</b> Struts2 plugin is a lightweight interceptor
+    plugin that enables dependency injection into Struts2 Actions with an annotation
+    system that is easy to use, flexible and intelligent.
+    </p>
+    
+    <b>Ease of use</b> comes from the fact that in order to have your Actions injected with
+    dependencies all you need to do, at the bare minimum, is annotate the relevant 
+    fields with information about the dependency and the injector will take care of all
+    the rest. This is an example:
+    <pre>
+    public class MyAction extends ActionSupport {
+    
+    	&#0064;AutoWired("java:comp/env/ds/myDataSource") Datasource datasource;
+    	
+    	public String execute() {
+    		// your business logic here
+    	}
+    }
+    </pre> 
+    ...that's it: the injector will automatically figure out that the dependency
+    is a datasource and will retrieve the appropriate binding from JNDI using the
+    info provided in the annotation itself.<br><br>
+    <b>Flexibility</b> is made available through the possibility of providing just an
+    alias in the annotation, or omitting it altogether and letting the injector
+    determine how to bind the resource based on a mapping file.
+    This is how it would look like:
+    <pre>
+    public class MyAction extends ActionSupport {
+    
+    	&#0064;AutoWired Datasource myDatasource(alias="privateDataSource");
+    	&#0064;AutoWired Queue myQueue;
+    	
+    	public String execute() {
+    		// your business logic here
+    	}
+    }
+    </pre>
+    When it comes to binding the data source, the injector will look for the 
+    "privateDataSource" alias into a mapping file (whose name you can choose at 
+    will and provide in the <code>interceptor-ref</code> tag of your 
+    <code>struts.xml</code>) . As for the Queue, since no information is provided 
+    the injector will look for an entry in the mapping that should look as follows:
+    <pre>
+    	my.package.MyAction#myQueue=&lt;whatever binding information you can give&gt;
+    	myDatasource=&lt;whatever other binding information you can give&gt;
+    </pre> 
+    This provides extreme flexibility, because you can specify the binding in the 
+    source itself, where the property is, or bind it on a per-class basis, or using 
+    an alias, which can be shared among many classes.<br><br>
+    <b>Intelligence</b> kicks in in the way the injector looks up binding information (as shown 
+    above), but it also works under the hood in order to make wiring things together as
+    smooth as possible: you could specify a dependency type in the annotation, but this
+    is rarely required as the injector will try to figure it out by itself as far as it can.<br>
+    Moreover, you can let the injector warn you with a severe exception when it cannot 
+    bind an action, or you can instruct it to just leave the field unbound and go on
+    (the default).<br><br>
+    Last, arguably EJBs play a central role in modern JavaEE applications. If you have an EJB
+    and you run on a supported server (as far as "auto-naming"" is concerned), you can omit 
+    binding information altogether: the injector will invoke a JNDI name factory class that, 
+    given the EJB interface type and a naming pattern (which is unfortunately highly 
+    Application Server specific) will create the JNDI name for the EJB local or remote 
+    interface. Thus, using an EJB can be as easy as 
+    <pre>
+    	&#0064;AutoWired MyBeanRemote ejbRemote;
+    	&#0064;AutoWired MyBeanLocal ejbLocal;
+    </pre>
+  </BODY>
+</HTML>
