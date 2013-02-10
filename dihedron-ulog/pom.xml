@@ -11,6 +11,7 @@
 	</parent>
 	
 	<artifactId>ulog</artifactId>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 	
 	<name>org.dihedron.ulog</name>
