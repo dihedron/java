@@ -13,8 +13,8 @@
 	<artifactId>ulog</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>org.dihedron.ogtl</name>
-	<description>Object Graph Traversal Language (OGTL)</description>
+	<name>org.dihedron.ulog</name>
+	<description>uLog minimalisting logging library</description>
 	<url>http://maven.apache.org</url>
 
 	<build>
