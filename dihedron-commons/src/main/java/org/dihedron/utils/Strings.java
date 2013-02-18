@@ -17,7 +17,8 @@
  * along with "Commons". If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.dihedron.strings;
+package org.dihedron.utils;
+
 
 
 /**
@@ -27,17 +28,6 @@ package org.dihedron.strings;
  */
 public class Strings {
 	
-	private static ThreadLocal<StringBuilder> buffer = new ThreadLocal<StringBuilder>() {
-		@Override
-		public StringBuilder initialValue() {
-			return new StringBuilder();
-		}
-	};
-
-	/**
-	 * The logger.
-	 */
-//	private static Logger logger = LoggerFactory.getLogger(Strings.class);
 
 	/**
 	 * Checks whether the given string is neither null nor blank.
@@ -77,17 +67,53 @@ public class Strings {
 	 *   the concatenation of the input strings, or null if all strings are null.
 	 */
 	public static String concatenate(String... strings) {
-		StringBuilder builder = buffer.get();
-		builder.setLength(0);
+		return join("", strings);
+	}
+	
+	/**
+	 * Joins the given set of strings using the provided separator.
+	 * 
+	 * @param separator
+	 *   a character sequence used to separate strings.
+	 * @param strings
+	 *   the set of strings to be joined.
+	 * @return
+	 *   a string containing the list of input strings, or null if no valid input
+	 *   was provided.
+	 */
+	public static String join(String separator, String... strings) {
+		StringBuilder builder = new StringBuilder();
+		boolean first = true;
 		for(String string : strings) {
-			if(string != null) {
+			if(string != null) {				
+				if(!first) {
+					builder.append(separator);					
+				}
 				builder.append(string);
+				first = false;
 			}
 		}
 		if(builder.length() > 0) {
 			return builder.toString();
 		}
-		return null;
+		return null;		
+	}
+	
+	/**
+	 * Splits the given string using the given delimiter.
+	 * 
+	 * @param delimiter
+	 *   a character sequence that is assumed to be separating the items to be
+	 *   extracted from the joined string.
+	 * @param joined
+	 *   the string to extract items from.
+	 * @return
+	 *   an array of (trimmed) strings.
+	 */
+	public static String[] split(String delimiter, String joined) {
+		StringTokeniser tokeniser = new StringTokeniser(delimiter);
+		tokeniser.setTrimSpaces(true);
+		return tokeniser.tokenise(joined);
 	}
 	
 	/**

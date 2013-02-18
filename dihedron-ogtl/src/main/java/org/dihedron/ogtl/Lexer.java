@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import org.dihedron.ogtl.Token.Type;
-import org.dihedron.strings.Strings;
+import org.dihedron.utils.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

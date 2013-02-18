@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License 
  * along with "Commons". If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dihedron.strings;
+package org.dihedron.utils;
 
 
 import java.util.ArrayList;
@@ -30,6 +30,11 @@ import java.util.List;
  * @author Andrea Funto'
  */
 public class StringTokeniser {
+	
+//	/**
+//	 * The logger.
+//	 */
+//	private final static Logger logger = LoggerFactory.getLogger(Strings.class);
 		
 	/**
 	 * The default behaviour with respect to empty tokens:
@@ -137,18 +142,19 @@ public class StringTokeniser {
 		}
 		index = 0;
 		tokens = null;
-//		logger.trace("tokenising \"" + string + "\" using delimiter \"" + delimiter + "\"");
+//		logger.trace("tokenising '{}' using delimiter '{}'", string, delimiter);
 		List<String> list = new ArrayList<String>();
 		int length = delimiter.length();
 		int idx = string.indexOf(delimiter);
 		while(idx != -1) {
 			String token = string.substring(0, idx);
 			string = string.substring(idx + length);
-//			logger.trace("token: \"" + token + "\"");
+//			logger.trace("token: '{}'", token);
 			if(trimTokens) {
-				string = string.trim();
+				token = token.trim();
 			}			
 			if(!skimEmpty || token.length() > 0) {
+//				logger.trace("adding token: '{}'", token);
 				list.add(token);
 			}			
 			idx = string.indexOf(delimiter);
@@ -156,8 +162,12 @@ public class StringTokeniser {
 		
 		// handle the case where there is only one token
 		// or there is a token after the last separator
+		if(trimTokens) {
+			string = string.trim();
+		}			
+		
 		if(string.trim().length() > 0) {
-//			logger.trace("token: \"" + string + "\"");
+//			logger.trace("token: '{}'", string);
 			list.add(string);
 		}
 		

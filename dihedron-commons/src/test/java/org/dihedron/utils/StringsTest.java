@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License 
  * along with "Commons". If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dihedron.strings;
+package org.dihedron.utils;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.dihedron.utils.Strings;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,7 +38,7 @@ public class StringsTest {
 	}
 
 	/**
-	 * Test method for {@link org.dihedron.strings.Strings#isValid(java.lang.String)}.
+	 * Test method for {@link org.dihedron.utils.Strings#isValid(java.lang.String)}.
 	 */
 	@Test
 	public void testIsValid() {
@@ -49,7 +50,7 @@ public class StringsTest {
 	}
 
 	/**
-	 * Test method for {@link org.dihedron.strings.Strings#trim(java.lang.String)}.
+	 * Test method for {@link org.dihedron.utils.Strings#trim(java.lang.String)}.
 	 */
 	@Test
 	public void testTrim() {
@@ -58,15 +59,39 @@ public class StringsTest {
 	}
 
 	/**
-	 * Test method for {@link org.dihedron.strings.Strings#concatenate(java.lang.String[])}.
+	 * Test method for {@link org.dihedron.utils.Strings#concatenate(java.lang.String[])}.
 	 */
 	@Test
 	public void testConcatenate() {
 		assertTrue(Strings.concatenate("hello", "world", null, "!").equals("helloworld!"));
 	}
+	
+	/**
+	 * Test method for {@link org.dihedron.utils.Strings#join(java.lang.String, java.lang.String[])}.
+	 */
+	@Test
+	public void testJoin() {
+		assertTrue(Strings.join(",", "hello", "world", null, "!").equals("hello,world,!"));
+	}	
 
 	/**
-	 * Test method for {@link org.dihedron.strings.Strings#firstValidOf(java.lang.String[])}.
+	 * Test method for {@link org.dihedron.utils.Strings#join(java.lang.String, java.lang.String[])}.
+	 */
+	@Test
+	public void testSplit() {
+		String[] strings = Strings.split(",", "a,   happy,jolly    ,good, day,");
+		
+		assertTrue(strings.length == 5);
+		assertTrue(strings[0].equals("a"));
+		assertTrue(strings[1].equals("happy"));
+		assertTrue(strings[2].equals("jolly"));
+		assertTrue(strings[3].equals("good"));
+		assertTrue(strings[4].equals("day"));
+		
+	}
+	
+	/**
+	 * Test method for {@link org.dihedron.utils.Strings#firstValidOf(java.lang.String[])}.
 	 */
 	@Test
 	public void testFirstValidOf() {

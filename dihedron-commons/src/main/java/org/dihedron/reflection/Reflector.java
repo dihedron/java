@@ -572,6 +572,30 @@ public class Reflector {
 		return false;
 	}
 	
+	public boolean isSubClassOf(Class<?> clazz) {
+		if(clazz == null) return false;
+//		String classname = object.getClass().getName();
+//		for(Class<?> clazz : obj.getClasses()) {
+//			if(clazz.getName().equals(classname)) {
+//				return true;
+//			}
+//		}
+		try {
+			object.getClass().asSubclass(clazz);
+			return true;
+		} catch(ClassCastException e) {
+			return false;
+		}
+		
+//		String classname = obj.getName();
+//		for(Class<?> clazz : object.getClass().getClasses()) {
+//			if(classname.equals(clazz.getName())) {
+//				return true;
+//			}
+//		}
+		//return false;
+	}
+	
 	/**
 	 * Utility method that translates an array index, either positive or negative, 
 	 * into its positive representation. The method ensures that the index is within

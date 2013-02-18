@@ -16,10 +16,40 @@
  * You should have received a copy of the GNU Lesser General Public License 
  * along with "Commons". If not, see <http://www.gnu.org/licenses/>.
  */
+package org.dihedron.reflection;
+
+import static org.junit.Assert.assertTrue;
+
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * The package containing text manipulation utilities.
- *  
  * @author Andrea Funto'
  */
-package org.dihedron.strings;
+public class ReflectorTest {
+	/**
+	 * The logger.
+	 */
+//	private final static Logger logger = LoggerFactory.getLogger(ReflectorTest.class);
+
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	/**
+	 * Test method for {@link org.dihedron.reflection.Reflector#isSubClassOf(java.lang.Class)}.
+	 */
+	@Test
+	public void testIsSubClassOf() {
+		Map<String, String> map = new TreeMap<String, String>();
+		Reflector reflector = new Reflector().applyTo(map);
+		assertTrue(reflector.isSubClassOf(Map.class));
+	}
+
+}

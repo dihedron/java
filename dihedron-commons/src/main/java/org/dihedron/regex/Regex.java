@@ -29,22 +29,34 @@ import org.slf4j.LoggerFactory;
 
 public class Regex {
 	
-	/** Whether by default regular expressions are case sensitive (yes). */
+	/** 
+	 * Whether by default regular expressions are case sensitive (yes). 
+	 */
 	public static final boolean DEFAULT_CASE_SENSITIVITY = true;
 	
-	/** A regular expression pattern that matches all. */
+	/** 
+	 * A regular expression pattern that matches all.
+	 */
 	public static String MATCH_ALL = ".*";
 	
-	/** The logger. */
+	/** 
+	 * The logger. 
+	 */
 	private static Logger logger = LoggerFactory.getLogger(Regex.class);
 	
-	/** The actual regular expression. */
+	/** 
+	 * The actual regular expression. 
+	 */
 	private String regex;
 	
-	/** The regular expression pattern. */
+	/** 
+	 * The regular expression pattern. 
+	 */
 	private Pattern pattern;
 	
-	/** Whether the regular expression is case sensitive. */
+	/** 
+	 * Whether the regular expression is case sensitive. 
+	 */
 	private boolean caseSensitive = DEFAULT_CASE_SENSITIVITY;
 
 	/**
@@ -90,6 +102,12 @@ public class Regex {
 		return regex;
 	}
 	
+	/**
+	 * Sets the regular expression.
+	 * 
+	 * @param regex
+	 *   the new value for the regular expression.
+	 */
 	protected void setRegex(String regex) {
 		this.regex = regex;
 	}
@@ -105,6 +123,12 @@ public class Regex {
 		return caseSensitive;
 	}
 	
+	/**
+	 * Sets whether the regular expression should be handled as case sensitive.
+	 * 
+	 * @param caseSensitive
+	 *   whether the regular expression is case sensitive.
+	 */
 	protected void setCaseSensitive(boolean caseSensitive) {
 		this.caseSensitive = caseSensitive;
 	}
